@@ -13,7 +13,7 @@ public partial class WISAAPI_GetAvailability : System.Web.UI.Page
 {
 	public struct GetAvailabilityRequest
 	{
-                public int EmployeeID;
+		public int EmployeeID;
 	}
 
 	public struct GetAvailabilityResponse
@@ -22,11 +22,11 @@ public partial class WISAAPI_GetAvailability : System.Web.UI.Page
 		public string error;
 	}
 
-        public struct Availability
-        {
+	public struct Availability
+	{
 		public int AvailabilityID, Day;
 		public DateTime StartTime, EndTime;
-        }
+	}
 
 	protected void Page_Load(object sender, EventArgs e)
 	{
@@ -114,6 +114,7 @@ public partial class WISAAPI_GetAvailability : System.Web.UI.Page
 	{
 		string strJson = JsonConvert.SerializeObject(res);
 		Response.ContentType = "application/json; charset=utf-8";
+		Response.AppendHeader("Access-Control-Allow-Origin", "*");
 		Response.Write(strJson);
 		Response.End();
 	}

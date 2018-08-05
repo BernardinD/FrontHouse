@@ -102,6 +102,12 @@ public partial class WISAAPI_CreateEmployee : System.Web.UI.Page
 					res.Phone = Convert.ToString( reader["Phone"] );
 				}
 			reader.Close();
+
+			string createAvl = "INSERT INTO AvailabilityTbl (EmployeeID, DayOfWeek, StartTime, EndTime, Status) VALUES (@EmployeeID, 1, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1), (@EmployeeID, 2, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1), (@EmployeeID, 3, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1), (@EmployeeID, 4, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1), (@EmployeeID, 5, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1), (@EmployeeID, 6, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1), (@EmployeeID, 7, '1900-01-01T08:00:00', '1900-01-01T23:59:00', 1)";
+			SqlCommand createAvailCmd = new SqlCommand(createAvl, connection);
+			createAvailCmd.Parameters.Add("@EmployeeID", SqlDbType.Int);
+			createAvailCmd.Parameters["@EmployeeID"].Value = res.EmployeeID;
+			createAvailCmd.ExecuteNonQuery();
 		}
 		catch(Exception ex)
 		{
@@ -140,6 +146,7 @@ public partial class WISAAPI_CreateEmployee : System.Web.UI.Page
 	{
 		string strJson = JsonConvert.SerializeObject(res);
 		Response.ContentType = "application/json; charset=utf-8";
+		Response.AppendHeader("Access-Control-Allow-Origin", "*");
 		Response.Write(strJson);
 		Response.End();
 	}
